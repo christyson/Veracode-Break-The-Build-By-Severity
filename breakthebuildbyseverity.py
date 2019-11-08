@@ -3,6 +3,7 @@ import argparse
 import sys
 import subprocess
 import time
+import xml.etree.ElementTree as ET
 from datetime import datetime
 
 
@@ -20,6 +21,43 @@ def now():
 def printunbuff(string):
     print(string, flush=True)
 
+def check():
+    found = False  
+    if (args.severity == 0):
+       # don't want to break on severity so return.
+       return found
+    with open('sr.xml') as f:
+        datafile = f.readlines()
+    for line in datafile:
+        if 'numflawssev' in line:
+#            print('numflawssev processing')
+#            print(line)
+            if not('numflawssev5="0"' in line): 
+#               print('at least one sev 5')
+#               print(line)
+               found = True
+            if (not('numflawssev4="0"' in line) and (args.severity <= 4)): 
+#               print('at least one sev 4')
+#               print(line)
+               found = True
+            if (not('numflawssev3="0"' in line) and (args.severity <= 3)): 
+#               print('at least one sev 3')
+#               print(line)
+               found = True
+        elif 'severity_desc' in line:
+            if ('severity_desc="Very High"' in line):
+#               print('at least one very high sca finding')            
+#               print(line)
+               found = True
+            elif (('severity_desc="High"' in line) and (args.severity <= 4)):
+#               print('at least one high sca finding')            
+#               print(line)
+               found = True
+            elif (('severity_desc="Medium"' in line) and (args.severity <= 3)):
+#               print('at least one Medium sca finding')            
+#               print(line)
+               found = True
+    return found  # Because you finished the search without finding
 
 # args
 parser = argparse.ArgumentParser(description='A Python wrapper to the Veracode Java API jar, '
@@ -29,6 +67,9 @@ parser = argparse.ArgumentParser(description='A Python wrapper to the Veracode J
 parser.add_argument('apiwrapperjar', help='File path to Veracode API Java wrapper')
 parser.add_argument('vid', help='Veracode API credentials ID')
 parser.add_argument('vkey', help='Veracode API credentials key')
+parser.add_argument('-s','--severity', type=int, default=0,
+                    help='Severity to break the build on. 0=none, 1=info, 2=low, 3=medium, 4=high, 5=very high')
+parser.add_argument('-sb','--skipbuild', action="store_true", help='Skip running the upload and scan and just check last build')
 parser.add_argument('-b', '--breakthebuild', action="store_true",
                     help='Exit code non-zero if scan does not pass policy')
 parser.add_argument('-wi', '--waitinterval', type=int, default=60,
@@ -36,6 +77,14 @@ parser.add_argument('-wi', '--waitinterval', type=int, default=60,
 parser.add_argument('-wm', '--waitmax', type=int, default=3600,
                     help='Maximum time in seconds to wait for scan to complete, default = 3600s')
 args, unparsed = parser.parse_known_args()
+
+print(args.severity)
+
+if (args.skipbuild):
+   print("skipbuild set")
+else:
+   print("skipbuild not set")
+#exit(0)
 
 # setup
 base_command = ['java', '-jar', args.apiwrapperjar, '-vid', args.vid, '-vkey', args.vkey]
@@ -71,15 +120,18 @@ if upload.returncode == 0:
                 # Wait for policy compliance calculation to complete
                 while True:
                     policy_compliance_status = get_substring(build_info.stdout.decode(), 'policy_compliance_status="', '"')
-                    printunbuff(now()+'Scan complete, policy compliance status: '+ policy_compliance_status)
+#                    printunbuff(now()+'Scan complete, policy compliance status: '+ policy_compliance_status)
                     if policy_compliance_status not in ['Calculating...', 'Not Assessed']:
                         printunbuff(now()+'Scan complete, policy compliance status: '+ policy_compliance_status)
                         if policy_compliance_status in ['Conditional Pass', 'Pass', 'Did Not Pass']:
-                            printunbuff('Scan Complete, Policy Compliance Status is: ' + policy_compliance_status)
-                            print('Build info call being made')
+#                           printunbuff('Scan Complete, Policy Compliance Status is: ' + policy_compliance_status)
+#                           print('Build info call being made')
                             command = base_command + ['-action', 'SummaryReport', '-outputfilepath=sr.xml', '-buildid', build_id]            
                             build_info = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-                            print('after Build info call')
+#                            print('after Build info call. calling check')
+                            fail = check()
+                            printunbuff(now()+'Checked for flaws severity '+str(args.severity)+'and above.  Fail build = '+str(fail)) 
+#                            print('after check call')
                             sys.exit(0)
                         else:
                             printunbuff('Else - Scan Complete, Policy Compliance Status is: ' + policy_compliance_status)
