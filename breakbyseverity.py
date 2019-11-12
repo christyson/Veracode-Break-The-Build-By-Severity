@@ -26,7 +26,7 @@ def check():
     if (args.severity == 0):
        # don't want to break on severity so return.
        return found
-    with open('sr.xml') as f:
+    with open(args.summaryreport) as f:
         datafile = f.readlines()
     for line in datafile:
         if 'numflawssev' in line:
