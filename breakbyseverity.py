@@ -78,7 +78,7 @@ args, unparsed = parser.parse_known_args()
 print(args.build_id, file=sys.stderr)
 print(args.summaryreport, file=sys.stderr)
 path_to_sr = os.path.dirname(os.path.abspath(__file__))
-args.summaryreport= os.path.join(path_to_script, "my_file.txt")
+args.summaryreport= os.path.join(path_to_sr, "my_file.txt")
 #exit(0)
 
 # setup
