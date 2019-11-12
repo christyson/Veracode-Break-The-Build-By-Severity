@@ -1,6 +1,7 @@
 from __future__ import print_function
 import argparse
 import sys
+import os
 import subprocess
 import time
 import xml.etree.ElementTree as ET
@@ -67,15 +68,17 @@ parser = argparse.ArgumentParser(description='A Python wrapper to the Veracode J
 parser.add_argument('apiwrapperjar', help='File path to Veracode API Java wrapper')
 parser.add_argument('vid', help='Veracode API credentials ID')
 parser.add_argument('vkey', help='Veracode API credentials key')
-parser.add_argument('-sr', '--summaryreport', default="./sr2.xml", help='File path to put summary report in')
+parser.add_argument('-sr', '--summaryreport', default="./sr3.xml", help='File path to put summary report in')
 parser.add_argument('-bid','--build_id', help='Build id for the build to check')
 parser.add_argument('-s','--severity', type=int, default=0,
                     help='Severity to break the build on. 0=none, 1=info, 2=low, 3=medium, 4=high, 5=very high')
 args, unparsed = parser.parse_known_args()
 
 #print(args.severity)
-print(args.build_id)
-print(args.summaryreport)
+print(args.build_id, file=sys.stderr)
+print(args.summaryreport, file=sys.stderr)
+path_to_sr = os.path.dirname(os.path.abspath(__file__))
+args.summaryreport= os.path.join(path_to_script, "my_file.txt")
 #exit(0)
 
 # setup
