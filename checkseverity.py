@@ -20,7 +20,8 @@ def now():
 
 
 def printunbuff(string):
-    print(string, flush=True, file=sys.stderr)
+    if (args.debug):
+       print(string, flush=True, file=sys.stderr)
 
 def check():
     found = 0  
@@ -68,6 +69,7 @@ parser = argparse.ArgumentParser(description='A Python wrapper to the Veracode J
 parser.add_argument('-sr', '--summaryreport', default="./sr3.xml", help='File path to read summary report from')
 parser.add_argument('-s','--severity', type=int, default=0,
                     help='Severity to break the build on. 0=none, 1=info, 2=low, 3=medium, 4=high, 5=very high')
+parser.add_argument('--debug', default=False, help='Print debug messages if True')
 args, unparsed = parser.parse_known_args()
 
 path_to_sr = os.path.dirname(os.path.abspath(__file__))
@@ -76,7 +78,7 @@ printunbuff('summary report file is: '+args.summaryreport)
 #exit(0)
 
 fail = check()
-printunbuff(now()+'Checked for flaws severity '+str(args.severity)+' and above.  Fail build = '+str(fail)) 
+print(now()+'Checked for flaws severity '+str(args.severity)+' and above.  Fail build = '+str(fail), file=sys.stderr)
 if fail == 0:
    sys.exit(0)
 else:
