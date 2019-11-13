@@ -23,7 +23,7 @@ def printunbuff(string):
     print(string, flush=True, file=sys.stderr)
 
 def check():
-    found = False  
+    found = 0  
     if (args.severity == 0):
        # don't want to break on severity so return.
        return found
@@ -36,28 +36,28 @@ def check():
             if not('numflawssev5="0"' in line): 
                printunbuff('at least one sev 5')
                printunbuff(line)
-               found = True
+               found = 1
             if (not('numflawssev4="0"' in line) and (args.severity <= 4)): 
                printunbuff('at least one sev 4')
                printunbuff(line)
-               found = True
+               found = 1
             if (not('numflawssev3="0"' in line) and (args.severity <= 3)): 
                printunbuff('at least one sev 3')
                printunbuff(line)
-               found = True
+               found = 1
         elif 'severity_desc' in line:
             if ('severity_desc="Very High"' in line):
                printunbuff('at least one very high sca finding')            
                printunbuff(line)
-               found = True
+               found = 1
             elif (('severity_desc="High"' in line) and (args.severity <= 4)):
                printunbuff('at least one high sca finding')            
                printunbuff(line)
-               found = True
+               found = 1
             elif (('severity_desc="Medium"' in line) and (args.severity <= 3)):
                printunbuff('at least one Medium sca finding')            
                printunbuff(line)
-               found = True
+               found = 1
     return found  # Because you finished the search without finding
 
 # args
@@ -77,4 +77,7 @@ printunbuff('summary report file is: '+args.summaryreport)
 
 fail = check()
 printunbuff(now()+'Checked for flaws severity '+str(args.severity)+' and above.  Fail build = '+str(fail)) 
-sys.exit(fail)
+if fail == 0:
+   sys.exit(0)
+else:
+   sys.exit(1)
