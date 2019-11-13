@@ -20,7 +20,7 @@ def now():
 
 
 def printunbuff(string):
-    print(string, flush=True)
+    print(string, flush=True, file=sys.stderr)
 
 def check():
     found = False  
@@ -75,10 +75,11 @@ parser.add_argument('-s','--severity', type=int, default=0,
 args, unparsed = parser.parse_known_args()
 
 #print(args.severity)
-print(args.build_id, file=sys.stderr)
-print(args.summaryreport, file=sys.stderr)
+print('build id is: '+args.build_id, file=sys.stderr)
+#print(args.summaryreport, file=sys.stderr)
 path_to_sr = os.path.dirname(os.path.abspath(__file__))
-args.summaryreport= os.path.join(path_to_sr, "my_file.txt")
+args.summaryreport= os.path.join(path_to_sr, args.summaryreport)
+print('summary report file is: '+args.summaryreport, file=sys.stderr)
 #exit(0)
 
 # setup
