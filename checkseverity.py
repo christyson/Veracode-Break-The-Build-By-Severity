@@ -31,32 +31,32 @@ def check():
         datafile = f.readlines()
     for line in datafile:
         if 'numflawssev' in line:
-#            print('numflawssev processing')
-#            print(line)
+            printunbuff('numflawssev processing')
+            printunbuff(line)
             if not('numflawssev5="0"' in line): 
-#               print('at least one sev 5')
-#               print(line)
+               printunbuff('at least one sev 5')
+               printunbuff(line)
                found = True
             if (not('numflawssev4="0"' in line) and (args.severity <= 4)): 
-#               print('at least one sev 4')
-#               print(line)
+               printunbuff('at least one sev 4')
+               printunbuff(line)
                found = True
             if (not('numflawssev3="0"' in line) and (args.severity <= 3)): 
-#               print('at least one sev 3')
-#               print(line)
+               printunbuff('at least one sev 3')
+               printunbuff(line)
                found = True
         elif 'severity_desc' in line:
             if ('severity_desc="Very High"' in line):
-#               print('at least one very high sca finding')            
-#               print(line)
+               printunbuff('at least one very high sca finding')            
+               printunbuff(line)
                found = True
             elif (('severity_desc="High"' in line) and (args.severity <= 4)):
-#               print('at least one high sca finding')            
-#               print(line)
+               printunbuff('at least one high sca finding')            
+               printunbuff(line)
                found = True
             elif (('severity_desc="Medium"' in line) and (args.severity <= 3)):
-#               print('at least one Medium sca finding')            
-#               print(line)
+               printunbuff('at least one Medium sca finding')            
+               printunbuff(line)
                found = True
     return found  # Because you finished the search without finding
 
@@ -72,7 +72,7 @@ args, unparsed = parser.parse_known_args()
 
 path_to_sr = os.path.dirname(os.path.abspath(__file__))
 args.summaryreport= os.path.join(path_to_sr, args.summaryreport)
-print('summary report file is: '+args.summaryreport, file=sys.stderr)
+printunbuff('summary report file is: '+args.summaryreport)
 #exit(0)
 
 fail = check()
