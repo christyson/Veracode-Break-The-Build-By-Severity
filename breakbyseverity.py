@@ -76,6 +76,7 @@ args, unparsed = parser.parse_known_args()
 
 #print(args.severity)
 print('build id is: '+args.build_id, file=sys.stderr)
+print('vid is: '+args.vid, file=sys.stderr)
 #print(args.summaryreport, file=sys.stderr)
 path_to_sr = os.path.dirname(os.path.abspath(__file__))
 args.summaryreport= os.path.join(path_to_sr, args.summaryreport)
@@ -87,7 +88,9 @@ base_command = ['java', '-jar', args.apiwrapperjar, '-vid', args.vid, '-vkey', a
 
 #print('Build info call being made')
 command = base_command + ['-action', 'SummaryReport', '-outputfilepath',args.summaryreport, '-buildid', args.build_id]            
+printunbuff(now()+'Calling summary report with: '+str(command)) 
 build_info = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+printunbuff(now()+'reply is: '+str(build_info)) 
 fail = check()
 printunbuff(now()+'Checked for flaws severity '+str(args.severity)+' and above.  Fail build = '+str(fail)) 
 #print('after check call')
