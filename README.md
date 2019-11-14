@@ -1,17 +1,17 @@
 This project contains three python scripts:
-	
-	1. breadthebuildbyseverity.py    - this will start an upload and scan, 
+    
+    1. breadthebuildbyseverity.py    - this will start an upload and scan, 
                                        wait for it to complete and then once that is done 
                                        gather a summary report and fail if there are SAST 
                                        or SCA flaws of the severity selected or higher
-	2. breakbyseverity.py            - this will take a build id and gather a summary report 
+    2. breakbyseverity.py            - this will take a build id and gather a summary report 
                                        and fail if there are SAST or SCA flaws of the severity
                                        selected or higher
     3. checkseverity.py              - this will take a summary report and fail if there are 
                                        SAST or SCA flaws of the severity selected or higher
 
 Note: all are designed to work with python 3
-	
+    
 usage: breakthebuildbyseverity.py [-h] [-s SEVERITY] [-b] [-wi WAITINTERVAL]
                                   [-wm WAITMAX]
                                   apiwrapperjar vid vkey
@@ -78,4 +78,4 @@ optional arguments:
                         Severity to break the build on. 0=none, 1=info, 2=low,
                         3=medium, 4=high, 5=very high
   --debug DEBUG         Print debug messages if True
-	
+    
