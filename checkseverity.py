@@ -62,11 +62,9 @@ def check():
     return found  # Because you finished the search without finding
 
 # args
-parser = argparse.ArgumentParser(description='A Python wrapper to the Veracode Java API jar, '
-                                             'providing "break the build" functionality',
-                                 epilog='Any additional arguments will be passed through to the API jar.',
+parser = argparse.ArgumentParser(description='A Python wrapper providing "check a build result and fail by severity" functionality',
                                  allow_abbrev=False)
-parser.add_argument('-sr', '--summaryreport', default="./sr3.xml", help='File path to read summary report from')
+parser.add_argument('-sr', '--summaryreport', default="sr3.xml", help='File path to read summary report from')
 parser.add_argument('-s','--severity', type=int, default=0,
                     help='Severity to break the build on. 0=none, 1=info, 2=low, 3=medium, 4=high, 5=very high')
 parser.add_argument('--debug', default=False, help='Print debug messages if True')

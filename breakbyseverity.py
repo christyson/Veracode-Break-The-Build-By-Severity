@@ -23,7 +23,7 @@ def printunbuff(string):
     print(string, flush=True, file=sys.stderr)
 
 def check():
-    found = False  
+    found = 0  
     if (args.severity == 0):
        # don't want to break on severity so return.
        return found
@@ -36,33 +36,33 @@ def check():
             if not('numflawssev5="0"' in line): 
 #               print('at least one sev 5')
 #               print(line)
-               found = True
+               found = 1
             if (not('numflawssev4="0"' in line) and (args.severity <= 4)): 
 #               print('at least one sev 4')
 #               print(line)
-               found = True
+               found = 1
             if (not('numflawssev3="0"' in line) and (args.severity <= 3)): 
 #               print('at least one sev 3')
 #               print(line)
-               found = True
+               found = 1
         elif 'severity_desc' in line:
             if ('severity_desc="Very High"' in line):
 #               print('at least one very high sca finding')            
 #               print(line)
-               found = True
+               found = 1
             elif (('severity_desc="High"' in line) and (args.severity <= 4)):
 #               print('at least one high sca finding')            
 #               print(line)
-               found = True
+               found = 1
             elif (('severity_desc="Medium"' in line) and (args.severity <= 3)):
 #               print('at least one Medium sca finding')            
 #               print(line)
-               found = True
+               found = 1
     return found  # Because you finished the search without finding
 
 # args
 parser = argparse.ArgumentParser(description='A Python wrapper to the Veracode Java API jar, '
-                                             'providing "break the build" functionality',
+                                             'providing "check a build and break by severity" functionality',
                                  epilog='Any additional arguments will be passed through to the API jar.',
                                  allow_abbrev=False)
 parser.add_argument('apiwrapperjar', help='File path to Veracode API Java wrapper')
@@ -75,23 +75,20 @@ parser.add_argument('-s','--severity', type=int, default=0,
 args, unparsed = parser.parse_known_args()
 
 #print(args.severity)
-print('build id is: '+args.build_id, file=sys.stderr)
-print('vid is: '+args.vid, file=sys.stderr)
+#print('build id is: '+args.build_id, file=sys.stderr)
+#print('vid is: '+args.vid, file=sys.stderr)
 #print(args.summaryreport, file=sys.stderr)
 path_to_sr = os.path.dirname(os.path.abspath(__file__))
 args.summaryreport= os.path.join(path_to_sr, args.summaryreport)
-print('summary report file is: '+args.summaryreport, file=sys.stderr)
-#exit(0)
+#print('summary report file is: '+args.summaryreport, file=sys.stderr)
 
 # setup
 base_command = ['java', '-jar', args.apiwrapperjar, '-vid', args.vid, '-vkey', args.vkey]
 
-#print('Build info call being made')
 command = base_command + ['-action', 'SummaryReport', '-outputfilepath',args.summaryreport, '-buildid', args.build_id]            
 printunbuff(now()+'Calling summary report with: '+str(command)) 
 build_info = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 printunbuff(now()+'reply is: '+str(build_info)) 
 fail = check()
 printunbuff(now()+'Checked for flaws severity '+str(args.severity)+' and above.  Fail build = '+str(fail)) 
-#print('after check call')
 sys.exit(fail)
