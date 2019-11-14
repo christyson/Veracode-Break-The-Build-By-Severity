@@ -87,3 +87,24 @@ optional arguments:
                         3=medium, 4=high, 5=very high
   --debug DEBUG         Print debug messages if True
 </pre></code>    
+
+
+## Example stage to use this after a Veracode scan in a Jenkins pipeline
+<pre><code>
+stage('Veracode Check status') {
+      // Check severity of results
+      sh 'wget -q -O checkseverity.py https://raw.githubusercontent.com/christyson/Veracode-Break-The-Build-By-Severity/master/checkseverity.py'
+      sh 'wget -q -O veracode-wrapper.jar https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/${VERACODE_WRAPPER_VERSION}/vosp-api-wrappers-java-${VERACODE_WRAPPER_VERSION}.jar'
+
+      withCredentials([usernamePassword(credentialsId: 'Veracode', passwordVariable: 'VERACODEKEY', usernameVariable: 'VERACODEID')]) {
+         sh '''
+           logFilename=${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log
+           srfilename=${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/sr.xml
+           buildid=$(grep 'The build_id of the new build is "' ${logFilename} | grep -oE '"[0-9][0-9]*"'| tr -d '"')
+           java -jar veracode-wrapper.jar -vid ${VERACODEID} -vkey ${VERACODEKEY} -action SummaryReport -outputfilepath=${srfilename} -buildid=${buildid}
+           python3 checkseverity.py -s=${VC_Severity} -sr=${srfilename}
+           echo $?
+         '''
+      } 
+    }
+    </pre></code>
