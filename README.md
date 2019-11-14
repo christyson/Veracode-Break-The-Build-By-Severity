@@ -7,7 +7,7 @@ This project contains three python scripts:
 	2. breakbyseverity.py            - this will take a build id and gather a summary report 
                                        and fail if there are SAST or SCA flaws of the severity
                                        selected or higher
-	3. checkseverity.py	             - this will take a summary report and fail if there are 
+    3. checkseverity.py              - this will take a summary report and fail if there are 
                                        SAST or SCA flaws of the severity selected or higher
 
 Note: all are designed to work with python 3
