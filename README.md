@@ -13,6 +13,8 @@ This project contains three python scripts useful for working with Veracode proj
                                        SAST or SCA flaws of the severity selected or higher
 
 Note: all are designed to work with python 3
+
+# breakthebuildbyseverity.py
 <pre><code>    
 usage: breakthebuildbyseverity.py [-h] [-s SEVERITY] [-b] [-wi WAITINTERVAL]
                                   [-wm WAITMAX]
@@ -42,6 +44,7 @@ optional arguments:
 Any additional arguments will be passed through to the API jar.
 </pre></code>    
 
+# breakbyseverity.py
 <pre><code>    
 usage: breakbyseverity.py [-h] [-sr SUMMARYREPORT] [-bid BUILD_ID]
                           [-s SEVERITY]
@@ -68,6 +71,7 @@ optional arguments:
 Any additional arguments will be passed through to the API jar.
 </pre></code>    
 
+# checkseverity.py
 <pre><code>    
 usage: checkseverity.py [-h] [-sr SUMMARYREPORT] [-s SEVERITY] [--debug DEBUG]
 
