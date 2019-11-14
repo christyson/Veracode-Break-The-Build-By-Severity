@@ -109,3 +109,5 @@ stage('Veracode Check status') {
     }
 </pre></code>
 ![Jenkins Variables](https://github.com/christyson/Veracode-Break-The-Build-By-Severity/blob/master/Jenkins_Variables.PNG)
+
+Note: The latest version of the Java API wrapper can be found in the Maven Central Repository under the group ID com.veracode.vosp.api.wrappers. 
