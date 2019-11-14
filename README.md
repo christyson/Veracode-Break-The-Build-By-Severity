@@ -17,7 +17,7 @@ usage: breakthebuildbyseverity.py [-h] [-s SEVERITY] [-b] [-wi WAITINTERVAL]
                                   apiwrapperjar vid vkey
 
 A Python wrapper to the Veracode Java API jar, providing "break the build by
-severity" functionality
+severity" functionality 
 
 positional arguments:
   apiwrapperjar         File path to Veracode API Java wrapper
