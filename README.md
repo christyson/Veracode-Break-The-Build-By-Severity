@@ -107,4 +107,5 @@ stage('Veracode Check status') {
          '''
       } 
     }
-    </pre></code>
+</pre></code>
+![Jenkins Variables](https://github.com/christyson/Veracode-Break-The-Build-By-Severity/blob/master/Jenkins_Variables.PNG)
