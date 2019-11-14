@@ -40,8 +40,9 @@ optional arguments:
                         default = 3600s
 
 Any additional arguments will be passed through to the API jar.
+</pre></code>    
 
-
+<pre><code>    
 usage: breakbyseverity.py [-h] [-sr SUMMARYREPORT] [-bid BUILD_ID]
                           [-s SEVERITY]
                           apiwrapperjar vid vkey
@@ -65,8 +66,9 @@ optional arguments:
                         3=medium, 4=high, 5=very high
 
 Any additional arguments will be passed through to the API jar.
+</pre></code>    
 
-
+<pre><code>    
 usage: checkseverity.py [-h] [-sr SUMMARYREPORT] [-s SEVERITY] [--debug DEBUG]
 
 A Python wrapper providing "check a build result and fail by severity"
