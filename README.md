@@ -1,4 +1,4 @@
-This project contains three python scripts:
+This project contains three python scripts useful for working with Veracode projects:
     
     1. breadthebuildbyseverity.py    - this will start an upload and scan, 
                                        wait for it to complete and then once that is done 
