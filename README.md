@@ -1,12 +1,14 @@
 This project contains three python scripts:
 	
-	1. breadthebuildbyseverity.py 	- this will start an upload and scan, 
-	                                  wait for it to complete and then once that is done gather a summary report and fail 
-									  if there are SAST or SCA flaws of the severity selected or higher
-	2. breakbyseverity.py			- this will take a build id and gather a summary report and fail
-									  if there are SAST or SCA flaws of the severity selected or higher
-	3. checkseverity.py				- this will take a summary report and fail if there are SAST or SCA flaws of the severity 
-	                                  selected or higher
+	1. breadthebuildbyseverity.py    - this will start an upload and scan, 
+                                       wait for it to complete and then once that is done 
+                                       gather a summary report and fail if there are SAST 
+                                       or SCA flaws of the severity selected or higher
+	2. breakbyseverity.py            - this will take a build id and gather a summary report 
+                                       and fail if there are SAST or SCA flaws of the severity
+                                       selected or higher
+	3. checkseverity.py	             - this will take a summary report and fail if there are 
+                                       SAST or SCA flaws of the severity selected or higher
 
 Note: all are designed to work with python 3
 	
