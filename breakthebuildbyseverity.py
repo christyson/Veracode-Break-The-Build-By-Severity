@@ -76,6 +76,7 @@ parser.add_argument('-wi', '--waitinterval', type=int, default=60,
                     help='Time interval in seconds between scan policy status checks, default = 60s')
 parser.add_argument('-wm', '--waitmax', type=int, default=3600,
                     help='Maximum time in seconds to wait for scan to complete, default = 3600s')
+parser.add_argument('--debug', default=False, help='Print debug messages if True')
 args, unparsed = parser.parse_known_args()
 
 # setup
