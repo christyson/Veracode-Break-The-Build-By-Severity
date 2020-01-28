@@ -91,16 +91,12 @@ printunbuff(upload.stdout.decode())
 
 if upload.returncode == 0:
     try:
-        build_id = get_substring(upload.stdout.decode(), 'The build_id of the new build is "', '"')
         app_id = get_substring(upload.stdout.decode(), 'appid=', ')')
+        build_id = get_substring(upload.stdout.decode(), 'The build_id of the new build is "', '"')
     except ValueError as e:
         printunbuff(e)
-        try:
-           app_id = get_substring(upload.stdout.decode(), 'The app_id of the new application profile is "', '"')
-        except ValueError as e:
-           printunbuff(e)
-           sys.exit(1)
- 
+        sys.exit(1)
+
     # watch scan status for policy pass/fail
     if args.breakthebuild:
         command = base_command + ['-action', 'GetBuildInfo', '-appid', app_id, '-buildid', build_id]
