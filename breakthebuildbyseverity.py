@@ -77,6 +77,7 @@ parser.add_argument('-wi', '--waitinterval', type=int, default=60,
 parser.add_argument('-wm', '--waitmax', type=int, default=3600,
                     help='Maximum time in seconds to wait for scan to complete, default = 3600s')
 parser.add_argument('--debug', default=False, help='Print debug messages if True')
+parser.add_argument('-sr', '--summaryreport', default="sr.xml", help='File to create summary report in')
 args, unparsed = parser.parse_known_args()
 
 # setup
@@ -117,7 +118,7 @@ if upload.returncode == 0:
                     if policy_compliance_status not in ['Calculating...', 'Not Assessed']:
                         printunbuff(now()+'Scan complete, policy compliance status: '+ policy_compliance_status)
                         if policy_compliance_status in ['Conditional Pass', 'Pass', 'Did Not Pass']:
-                            command = base_command + ['-action', 'SummaryReport', '-outputfilepath=sr.xml', '-buildid', build_id]            
+                            command = base_command + ['-action', 'SummaryReport', '-outputfilepath='+str(args.summaryreport), '-buildid', build_id]            
                             build_info = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                             fail = check()
                             print(now()+'Checked for flaws severity '+str(args.severity)+'and above.  Fail build = '+str(fail), file=sys.stderr) 
