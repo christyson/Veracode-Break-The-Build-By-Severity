@@ -115,7 +115,7 @@ if upload.returncode == 0:
                     policy_compliance_status = get_substring(build_info.stdout.decode(), 'policy_compliance_status="', '"')
 #                    printunbuff(now()+'Scan complete, policy compliance status: '+ policy_compliance_status)
                     if policy_compliance_status not in ['Calculating...', 'Not Assessed']:
-                        printunbuff(now()+'Scan complete, policy compliance status: '+ policy_compliance_status, file=sys.stderr)
+                        printunbuff(now()+'Scan complete, policy compliance status: '+ policy_compliance_status)
                         if policy_compliance_status in ['Conditional Pass', 'Pass', 'Did Not Pass']:
                             command = base_command + ['-action', 'SummaryReport', '-outputfilepath=sr.xml', '-buildid', build_id]            
                             build_info = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
