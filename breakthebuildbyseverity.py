@@ -91,12 +91,12 @@ printunbuff(upload.stdout.decode())
 
 if upload.returncode == 0:
     try:
-        build_id = get_substring(upload.stdout.decode(), 'The app_id of the new build is "', '"')
+        build_id = get_substring(upload.stdout.decode(), 'The build_id of the new build is "', '"')
         app_id = get_substring(upload.stdout.decode(), 'appid=', ')')
     except ValueError as e:
         printunbuff(e)
         try:
-           app_id = get_substring(upload.stdout.decode(), 'The build_id of the new application profile is "', '"')
+           app_id = get_substring(upload.stdout.decode(), 'The app_id of the new application profile is "', '"')
         except ValueError as e:
            printunbuff(e)
            sys.exit(1)
