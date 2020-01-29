@@ -60,6 +60,8 @@ Any additional arguments will be passed through to the API jar.
 </pre></code>    
 ![Jenkins Variables](https://github.com/christyson/Veracode-Break-The-Build-By-Severity/blob/master/bbts_Jenkins_Variables.PNG)
 
+Note: The latest version of the Java API wrapper can be found in the Maven Central Repository under the group ID com.veracode.vosp.api.wrappers. 
+
 ## breakbyseverity.py
 <pre><code>    
 usage: breakbyseverity.py [-h] [-sr SUMMARYREPORT] [-bid BUILD_ID]
