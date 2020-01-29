@@ -44,6 +44,22 @@ optional arguments:
 Any additional arguments will be passed through to the API jar.
 </pre></code>    
 
+## Example stage to use this after a Veracode scan in a Jenkins pipeline
+<pre><code>
+   stage('Veracode Scan and Break the build by severity') {
+      // Check severity of results
+      sh 'wget -q -O btbbsseverity.py https://raw.githubusercontent.com/christyson/Veracode-Break-The-Build-By-Severity/master/breakthebuildbyseverity.py'
+      sh 'wget -q -O veracode-wrapper.jar https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/${VERACODE_WRAPPER_VERSION}/vosp-api-wrappers-java-${VERACODE_WRAPPER_VERSION}.jar'
+
+      withCredentials([usernamePassword(credentialsId: 'Veracode', passwordVariable: 'VERACODEKEY', usernameVariable: 'VERACODEID')]) {
+         sh '''
+           python3 btbbsseverity.py veracode-wrapper.jar ${VERACODEID} ${VERACODEKEY} -s=${VC_Severity} -b ${VC_Debug} -appname "${VC_ProjectName}" -filepath **/**.war -createprofile true -autoscan true -version ${BUILD_NUMBER}
+         '''
+      }
+    }
+</pre></code>    
+![Jenkins Variables](https://github.com/christyson/Veracode-Break-The-Build-By-Severity/blob/master/Jenkins_Variables.PNG)
+
 ## breakbyseverity.py
 <pre><code>    
 usage: breakbyseverity.py [-h] [-sr SUMMARYREPORT] [-bid BUILD_ID]
