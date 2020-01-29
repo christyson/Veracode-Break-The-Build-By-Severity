@@ -40,7 +40,7 @@ optional arguments:
   -wm WAITMAX, --waitmax WAITMAX
                         Maximum time in seconds to wait for scan to complete,
                         default = 3600s
-
+  -d, --debug           Print debug messages if present
 Any additional arguments will be passed through to the API jar.
 </pre></code>    
 
