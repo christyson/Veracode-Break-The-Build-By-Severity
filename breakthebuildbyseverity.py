@@ -58,7 +58,7 @@ def check():
                printunbuff('at least one Medium sca finding')            
                printunbuff(line)
                found = 1
-    return found  # Because you finished the search without finding
+    return found  
 
 # args
 parser = argparse.ArgumentParser(description='A Python wrapper to the Veracode Java API jar, '
@@ -121,10 +121,11 @@ if upload.returncode == 0:
                             command = base_command + ['-action', 'SummaryReport', '-outputfilepath='+str(args.summaryreport), '-buildid', build_id]            
                             build_info = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                             fail = check()
-                            print(now()+'Checked for flaws severity '+str(args.severity)+'and above.  Fail build = '+str(fail), file=sys.stderr) 
                             if fail == 0:
+                               print(now()+'Checked for flaws severity '+str(args.severity)+' and above.  Fail build = False', file=sys.stderr) 
                                sys.exit(0)
                             else:
+                               print(now()+'Checked for flaws severity '+str(args.severity)+' and above.  Fail build = True', file=sys.stderr) 
                                sys.exit(1)
                     else:
                         time.sleep(args.waitinterval)
