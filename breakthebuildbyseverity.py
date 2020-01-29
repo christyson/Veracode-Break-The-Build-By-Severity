@@ -77,6 +77,7 @@ parser.add_argument('-wi', '--waitinterval', type=int, default=60,
 parser.add_argument('-wm', '--waitmax', type=int, default=3600,
                     help='Maximum time in seconds to wait for scan to complete, default = 3600s')
 #parser.add_argument('--debug', default=False, help='Print debug messages if True')
+parser.add_argument('-sr', '--summaryreport', default="sr.xml", help='File to create summary report in')
 parser.add_argument('-d', '--debug', action="store_true",
                     help='Print debug messages if present')
 args, unparsed = parser.parse_known_args()
