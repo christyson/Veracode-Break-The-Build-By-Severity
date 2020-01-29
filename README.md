@@ -58,7 +58,7 @@ Any additional arguments will be passed through to the API jar.
       }
     }
 </pre></code>    
-![Jenkins Variables](https://github.com/christyson/Veracode-Break-The-Build-By-Severity/blob/master/Jenkins_Variables.PNG)
+![Jenkins Variables](https://github.com/christyson/Veracode-Break-The-Build-By-Severity/blob/master/bbts_Jenkins_Variables.PNG)
 
 ## breakbyseverity.py
 <pre><code>    
