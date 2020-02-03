@@ -97,8 +97,13 @@ if upload.returncode == 0:
         app_id = get_substring(upload.stdout.decode(), 'appid=', ')')
         build_id = get_substring(upload.stdout.decode(), 'The build_id of the new build is "', '"')
     except ValueError as e:
-        printunbuff(e)
-        sys.exit(1)
+        // The app_id of the new application profile is "
+        try: 
+           app_id = get_substring(upload.stdout.decode(), 'The app_id of the new application profile is "', '"')
+           build_id = get_substring(upload.stdout.decode(), 'The build_id of the new build is "', '"')
+        except ValueError as e:
+            printunbuff(e)
+            sys.exit(1)
 
     # watch scan status for policy pass/fail
     if args.breakthebuild:
