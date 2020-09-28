@@ -2,7 +2,7 @@
 
 This project contains three python scripts useful for working with Veracode projects:
     
-    1. breadthebuildbyseverity.py    - this will start an upload and scan, 
+    1. breakthebuildbyseverity.py    - this will start an upload and scan, 
                                        wait for it to complete and then once that is done 
                                        gather a summary report and fail if there are SAST 
                                        or SCA flaws of the severity selected or higher
